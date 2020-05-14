@@ -8,7 +8,15 @@ int main()
 	cout << "Enter file link - ";
 	cin >> fileLink;
 	EncodingHuffman myEncoding(fileLink);
-	myEncoding.encoding();
-	myEncoding.decoding();
+	try
+	{
+		myEncoding.encoding();
+		myEncoding.decoding();
+	}
+	catch (domain_error error)
+	{
+		cout << error.what();
+	}
+	
 	return 0;
 }
