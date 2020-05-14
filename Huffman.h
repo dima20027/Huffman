@@ -12,6 +12,9 @@ public:
 
 	void encoding()
 	{
+		if (!file.is_open()) {
+			throw domain_error("Domain error");
+		}
 		char symb;
 		while (!file.eof())
 		{
@@ -35,6 +38,7 @@ public:
 
 	void decoding()
 	{
+		if (root == nullptr) throw out_of_range("Missing Decoding Tree");
 		encFile.open("code.txt", ios::in);
 		nodeTree *bypass = root;
 		float tempBit=0;
