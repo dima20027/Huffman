@@ -19,7 +19,9 @@ public:
 		while (!file.eof())
 		{
 			symb = file.get();
+			if (file.eof()) break;
 			insertList(symb);
+			
 		}
 		file.close();
 		sort();
@@ -29,6 +31,7 @@ public:
 		while (!file.eof())
 		{
 			symb = file.get();
+			if (file.eof()) break;
 			findCode(symb);
 		}
 		file.close();
@@ -40,6 +43,7 @@ public:
 	{
 		if (root == nullptr) throw out_of_range("Missing Decoding Tree");
 		encFile.open("code.txt", ios::in);
+		fstream f("text.txt", ios::out);
 		nodeTree *bypass = root;
 		float tempBit=0;
 		float tempByte=0;
@@ -51,6 +55,7 @@ public:
 				if (bypass->symb != NULL)
 				{
 					cout << bypass->symb;
+					f << bypass->symb;
 					bypass = root;
 					tempByte++;
 				}
@@ -60,9 +65,14 @@ public:
 				bypass = bypass->left;
 				if (bypass->symb != NULL)
 				{
-					cout << bypass->symb;
-					bypass = root;
-					tempByte++;
+					if (!encFile.eof())
+					{
+						cout << bypass->symb;
+							f << bypass->symb;
+							bypass = root;
+							tempByte++;
+					}
+					
 				}
 			}
 			tempBit++;
@@ -143,6 +153,7 @@ private:
 
 	void insertList(char symb)
 	{
+		
 		if (headList == nullptr)
 		{
 			headList = new nodeList;
